@@ -1,0 +1,14 @@
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+cd myenv 
+cd .\Scripts\ 
+.\activate
+
+uvicorn main:app --reload
+
+Get-ExecutionPolicy
+
+Set-ExecutionPolicy Unrestricted
+
+Get-ExecutionPolicy
+
+

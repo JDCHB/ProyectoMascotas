@@ -1,0 +1,43 @@
+
+1.- pip install virtualenv
+
+-->creacion de entorno virtual
+2.- python -m venv myvenv
+
+
+
+ 3.- --> acceder al entorno
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+cd myvenv 
+cd .\Scripts\ 
+.\activate
+
+
+cd..
+cd..
+cd app
+
+--> librerias
+pip install mysql-connector-python
+
+
+
+
+--> instalar fast api
+pip install "fastapi[standard]"
+
+
+
+ACTIVAR API
+fastapi dev main.py
+
+
+
+
+uvicorn main:app --reload
+
+Get-ExecutionPolicy
+
+Set-ExecutionPolicy Unrestricted
+
+Get-ExecutionPolicy
