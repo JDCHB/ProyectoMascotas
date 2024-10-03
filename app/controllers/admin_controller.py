@@ -1,5 +1,6 @@
 import mysql.connector
-from fastapi import HTTPException
+from fastapi import HTTPException, UploadFile
+import pandas as pd
 from app.config.db_config import get_db_connection
 from app.models.user_model import User
 from app.models.mascotas_model import Mascotas
@@ -7,7 +8,48 @@ from fastapi.encoders import jsonable_encoder
 
 
 class adminController:
+
+    # Cargue Masivo
+    def create_usuario_masivo(self, file: UploadFile):
+        conn = None
+        try:
+            # Leer el archivo Excel
+            df = pd.read_excel(file.file, engine='openpyxl')
+
+            required_columns = ['email', 'password',
+                                'nombre', 'apellido', 'documento', 'telefono', 'id_rol']
+            for col in required_columns:
+                if col not in df.columns:
+                    return {"error": f"Falta la columna: {col}"}
+
+            # Conectar a la base de datos
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            for index, row in df.iterrows():
+                cursor.execute("INSERT INTO usuarios (email,password,nombre,apellido,documento,telefono,id_rol) VALUES (%s, %s, %s, %s, %s ,%s ,%s)",
+                               (row['email'], row['password'],
+                                row['nombre'], row['apellido'], row['documento'], row['telefono'], row['id_rol'])
+                               )
+
+            conn.commit()  # Hacer commit después de todas las inserciones
+            return {"resultado": "Atributos creados exitosamente"}
+        except mysql.connector.Error as err:
+            if conn:
+                conn.rollback()  # Asegúrate de que conn esté definido
+            return {"error": str(err)}
+        except Exception as e:
+            if conn:
+                conn.rollback()
+            return {"error": f"Un error inesperado ocurrió: {str(e)}"}
+        finally:
+            if conn:
+                conn.close()
+
+    # HASTA AQUI
+
     # USUARIOS
+
     def create_user(self, user: User):
         try:
             conn = get_db_connection()

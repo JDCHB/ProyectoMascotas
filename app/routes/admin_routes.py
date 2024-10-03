@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, UploadFile, File
 from app.controllers.admin_controller import *
 from app.models.user_model import User
 
@@ -11,6 +11,16 @@ nuevo_usuario = adminController()
 async def create_user(user: User):
     rpta = nuevo_usuario.create_user(user)
     return rpta
+
+# CARGUE MASIVO
+
+
+@router.post("/create_usuario_masivo")
+async def create_usuario_masivo(file: UploadFile = File(...)):
+    rpta = nuevo_usuario.create_usuario_masivo(file)  # Esto está bien
+    return rpta
+
+# FIN CARGUE MASIVO
 
 
 @router.get("/get_user/{user_id}", response_model=User)
