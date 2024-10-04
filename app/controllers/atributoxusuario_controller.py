@@ -12,8 +12,8 @@ class AtributoxUsuariocontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO atributoxusuario (id_usuario, id_atributo, valor, descripcion) VALUES (%s,%s,%s,%s)",
-                           (atributoxusuario.id_usuario, atributoxusuario.id_atributo, atributoxusuario.valor, atributoxusuario.descripcion,))
+            cursor.execute("INSERT INTO atributoxusuario (id_usuario, id_atributo, valor, descripcion, estado) VALUES (%s,%s,%s,%s,%s)",
+                           (atributoxusuario.id_usuario, atributoxusuario.id_atributo, atributoxusuario.valor, atributoxusuario.descripcion, atributoxusuario.estado))
             conn.commit()
             conn.close()
             return {"resultado": "Atributoxusuario creado"}
@@ -39,7 +39,7 @@ class AtributoxUsuariocontroller():
                 'id_atributo': int(result[2]),
                 'valor': (result[3]),
                 'descripcion': (result[4]),
-
+                'estado': bool(result[5]),
             }
             payload.append(content)
 
@@ -71,6 +71,7 @@ class AtributoxUsuariocontroller():
                     'id_atributo': int(data[2]),
                     'valor': data[3],
                     'descripcion': data[4],
+                    'estado': bool(data[5]),
                 }
                 payload.append(content)
                 content = {}
@@ -92,9 +93,9 @@ class AtributoxUsuariocontroller():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "UPDATE atributoxusuario SET id_usuario	= %s, id_atributo = %s, valor = %s, descripcion = %s WHERE id = %s",
+                "UPDATE atributoxusuario SET id_usuario	= %s, id_atributo = %s, valor = %s, descripcion = %s, estado = %s WHERE id = %s",
                 (atributoxusuario.id_usuario, atributoxusuario.id_atributo,
-                 atributoxusuario.valor, atributoxusuario.descripcion, atributoxusuario_id,)
+                 atributoxusuario.valor, atributoxusuario.descripcion, atributoxusuario.estado, atributoxusuario_id,)
             )
             conn.commit()
 

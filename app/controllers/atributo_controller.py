@@ -12,8 +12,8 @@ class Atributocontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO atributo (nombre, descripcion) VALUES (%s, %s)",
-                           (atributo.nombre, atributo.descripcion,))
+            cursor.execute("INSERT INTO atributo (nombre, descripcion, estado) VALUES (%s, %s, %s)",
+                           (atributo.nombre, atributo.descripcion, atributo.estado,))
             conn.commit()
             conn.close()
             return {"resultado": "Atributo creado"}
@@ -37,7 +37,7 @@ class Atributocontroller():
                 'id': int(result[0]),
                 'nombre': result[1],
                 'descripcion': result[2],
-
+                'estado': bool(result[3]),
             }
             payload.append(content)
 
@@ -67,6 +67,7 @@ class Atributocontroller():
                     'id': int(data[0]),
                     'nombre': data[1],
                     'descripcion': data[2],
+                    'estado': bool(data[3]),
                 }
                 payload.append(content)
                 content = {}
@@ -88,8 +89,8 @@ class Atributocontroller():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "UPDATE atributo SET nombre = %s, descripcion = %s WHERE id = %s",
-                (atributo.nombre, atributo.descripcion, atributo_id)
+                "UPDATE atributo SET nombre = %s, descripcion = %s,  estado = %s WHERE id = %s",
+                (atributo.nombre, atributo.descripcion, atributo.estado, atributo_id)
             )
             conn.commit()
 

@@ -12,8 +12,8 @@ class Rolescontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO roles (nombre) VALUES (%s)",
-                           (roles.nombre,))
+            cursor.execute("INSERT INTO roles (nombre, estado) VALUES (%s, %s)",
+                           (roles.nombre, roles.estado,))
             conn.commit()
             conn.close()
             return {"resultado": "Rol creado"}
@@ -36,6 +36,7 @@ class Rolescontroller():
             content = {
                 'id': int(result[0]),
                 'nombre': result[1],
+                'estado': bool(result[2]),
             }
             payload.append(content)
 
@@ -64,6 +65,7 @@ class Rolescontroller():
                 content = {
                     'id': int(data[0]),
                     'nombre': data[1],
+                    'estado': bool(data[2]),
                 }
                 payload.append(content)
                 content = {}
@@ -85,8 +87,8 @@ class Rolescontroller():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "UPDATE roles SET nombre = %s WHERE id = %s",
-                (roles.nombre, rol_id,)
+                "UPDATE roles SET nombre = %s, estado = %s WHERE id = %s",
+                (roles.nombre, roles.estado, rol_id,)
             )
             conn.commit()
 

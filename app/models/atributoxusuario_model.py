@@ -7,3 +7,4 @@ class AtributoxUsuario(BaseModel):
     id_atributo: int = None
     valor: str
     descripcion: str
+    estado: bool

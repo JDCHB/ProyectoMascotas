@@ -12,8 +12,8 @@ class Mascotacontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO mascota (nombre,tipo_mascota,id_propietario,coordenadas) VALUES (%s, %s, %s, %s)",
-                           (mascota.nombre, mascota.tipo_mascota, mascota.id_propietario, mascota.coordenadas))
+            cursor.execute("INSERT INTO mascota (nombre,tipo_mascota,id_propietario,coordenadas, estado) VALUES (%s, %s, %s, %s, %s)",
+                           (mascota.nombre, mascota.tipo_mascota, mascota.id_propietario, mascota.coordenadas, mascota.estado))
             conn.commit()
             conn.close()
             return {"resultado": "Mascota Registrada"}
@@ -40,7 +40,7 @@ class Mascotacontroller():
                 "id_propietario": int(result[3]),
                 "coordenadas": result[4],
                 "fecha_hora": result[5],
-
+                'estado': bool(result[6]),
             }
             payload.append(content)
 
@@ -72,6 +72,7 @@ class Mascotacontroller():
                     'id_propietario': int(data[3]),
                     'coordenadas': data[4],
                     'fecha_hora': data[5],
+                    'estado': bool(data[2]),
                 }
                 payload.append(content)
                 content = {}
@@ -91,8 +92,8 @@ class Mascotacontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("UPDATE mascota SET nombre = %s, tipo_mascota = %s, coordenadas = %s WHERE id = %s",
-                           (mascota.nombre, mascota.tipo_mascota, mascota.coordenadas, mascota_id))
+            cursor.execute("UPDATE mascota SET nombre = %s, tipo_mascota = %s, coordenadas = %s, estado = %s WHERE id = %s",
+                           (mascota.nombre, mascota.tipo_mascota, mascota.coordenadas, mascota.estado, mascota_id))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(

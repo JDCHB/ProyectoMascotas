@@ -26,9 +26,9 @@ class Usercontroller():
             cursor = conn.cursor()
 
             for index, row in df.iterrows():
-                cursor.execute("INSERT INTO usuarios (email,password,nombre,apellido,documento,telefono,id_rol) VALUES (%s, %s, %s, %s, %s ,%s ,%s)",
+                cursor.execute("INSERT INTO usuarios (email,password,nombre,apellido,documento,telefono,id_rol,estado) VALUES (%s, %s, %s, %s, %s, %s ,%s ,%s)",
                                (row['email'], row['password'],
-                                row['nombre'], row['apellido'], row['documento'], row['telefono'], row['id_rol'])
+                                row['nombre'], row['apellido'], row['documento'], row['telefono'], row['id_rol'], row['estado'])
                                )
 
             conn.commit()  # Hacer commit después de todas las inserciones
@@ -52,8 +52,8 @@ class Usercontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO usuarios (email,password,nombre,apellido,documento,telefono,id_rol) VALUES (%s, %s, %s, %s, %s ,%s ,%s)",
-                           (user.email, user.password, user.nombre, user.apellido, user.documento, user.telefono, user.id_rol))
+            cursor.execute("INSERT INTO usuarios (email,password,nombre,apellido,documento,telefono,id_rol, estado) VALUES (%s, %s, %s, %s, %s, %s ,%s ,%s)",
+                           (user.email, user.password, user.nombre, user.apellido, user.documento, user.telefono, user.id_rol, user.estado))
             conn.commit()
             conn.close()
             return {"resultado": "Usuario creado"}
@@ -80,7 +80,8 @@ class Usercontroller():
                 'apellido': result[4],
                 'documento': result[5],
                 'telefono': result[6],
-                'id_rol': int(result[7])
+                'id_rol': int(result[7]),
+                'estado': bool(result[8])
             }
             payload.append(content)
 
@@ -113,7 +114,8 @@ class Usercontroller():
                     'apellido': data[4],
                     'documento': data[5],
                     'telefono': data[6],
-                    'id_rol': int(data[7])
+                    'id_rol': int(data[7]),
+                    'estado': bool(data[8])
                 }
                 payload.append(content)
                 content = {}
@@ -134,9 +136,9 @@ class Usercontroller():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "UPDATE usuarios SET email = %s, password = %s, nombre = %s, apellido = %s, documento = %s, telefono = %s, id_rol = %s WHERE id = %s",
+                "UPDATE usuarios SET email = %s, password = %s, nombre = %s, apellido = %s, documento = %s, telefono = %s, id_rol = %s, estado = %s WHERE id = %s",
                 (user.email, user.password, user.nombre, user.apellido,
-                 user.documento, user.telefono, user.id_rol, user_id)
+                 user.documento, user.telefono, user.id_rol, user.estado, user_id,)
             )
             conn.commit()
 
