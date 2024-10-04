@@ -13,7 +13,7 @@ class AtributoxUsuariocontroller():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("INSERT INTO atributoxusuario (id_usuario, id_atributo, valor, descripcion) VALUES (%s,%s,%s,%s)",
-                           (atributoxusuario.id_usuario, atributoxusuario.id_usuario, atributoxusuario.valor, atributoxusuario.descripcion,))
+                           (atributoxusuario.id_usuario, atributoxusuario.id_atributo, atributoxusuario.valor, atributoxusuario.descripcion,))
             conn.commit()
             conn.close()
             return {"resultado": "Atributoxusuario creado"}
