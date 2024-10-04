@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.routes.user_routes import router as user_router
+from app.routes.atributo_routes import router as atributo_router
 from app.routes.mascota_routes import router as mascota_routes
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -21,6 +22,7 @@ app.add_middleware(
 )
 
 app.include_router(user_router)
+app.include_router(atributo_router)
 app.include_router(mascota_routes)
 
 
