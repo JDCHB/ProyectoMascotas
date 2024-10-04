@@ -24,10 +24,10 @@ async def get_atributoxusuario(atributoxusuario_id: int):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.put("/update_atributoxusuarios/{atributoxusuario_id}")
-async def update_atributoxusuarios(atributoxusuario_id: int, atributoxusuario: AtributoxUsuario):
+@router.put("/update_atributoxusuario/{atributoxusuario_id}")
+async def update_atributoxusuario(atributoxusuario_id: int, atributoxusuario: AtributoxUsuario):
     try:
-        rpta = nuevo_atributoxusuario.update_atributoxusuarios(
+        rpta = nuevo_atributoxusuario.update_atributoxusuario(
             atributoxusuario_id, atributoxusuario)
         return rpta
     except HTTPException as e:
