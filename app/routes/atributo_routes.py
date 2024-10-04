@@ -26,7 +26,7 @@ async def get_atributo(atributo_id: int):
 @router.put("/update_atributo/{atributo_id}")
 async def update_atributo(atributo_id: int, atributo: Atributo):
     try:
-        rpta = nuevo_atributo.get_atributo(atributo_id, atributo)
+        rpta = nuevo_atributo.update_atributo(atributo_id, atributo)
         return rpta
     except HTTPException as e:
         raise e
