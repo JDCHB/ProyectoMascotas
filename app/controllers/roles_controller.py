@@ -85,7 +85,7 @@ class Rolescontroller():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "UPDATE roles SET nombre = %s, WHERE id = %s",
+                "UPDATE roles SET nombre = %s WHERE id = %s",
                 (roles.nombre, rol_id,)
             )
             conn.commit()
