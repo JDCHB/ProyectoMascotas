@@ -32,7 +32,7 @@ class Usercontroller():
                                )
 
             conn.commit()  # Hacer commit después de todas las inserciones
-            return {"resultado": "Atributos creados exitosamente"}
+            return {"resultado": "Usuarios creados exitosamente"}
         except mysql.connector.Error as err:
             if conn:
                 conn.rollback()  # Asegúrate de que conn esté definido
