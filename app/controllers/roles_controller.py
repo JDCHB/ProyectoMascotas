@@ -79,7 +79,7 @@ class Rolescontroller():
         finally:
             conn.close()
 
-    # ACTUALIZAR ATRIBUTO
+    # ACTUALIZAR ROL
     def update_rol(self, rol_id: int, roles: Roles):
         try:
             conn = get_db_connection()

@@ -53,7 +53,7 @@ class Atributocontroller():
         finally:
             conn.close()
 
-    # VER USUARIOS
+    # VER ATRIBUTOS
     def get_atributos(self):
         try:
             conn = get_db_connection()
@@ -106,7 +106,7 @@ class Atributocontroller():
             if conn:
                 conn.close()
 
-    # ELIMINAR USARIO
+    # ELIMINAR ATRIBUTO
     def delete_atributo(self, atributo_id: int):
         try:
             conn = get_db_connection()
