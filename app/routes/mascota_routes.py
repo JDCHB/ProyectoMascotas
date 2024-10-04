@@ -1,10 +1,10 @@
 from fastapi import APIRouter, HTTPException
-from app.controllers.user_controller import *
 from app.models.mascotas_model import Mascotas
+from app.controllers.mascota_controller import *
 
 router = APIRouter()
 
-nueva_mascota = Usercontroller()
+nueva_mascota = Mascotacontroller()
 
 
 @router.post("/create_mascota")

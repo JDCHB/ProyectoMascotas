@@ -1,10 +1,9 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
-from app.controllers.admin_controller import *
 from app.models.user_model import User
-
+from app.controllers.user_controller import *
 router = APIRouter()
 
-nuevo_usuario = adminController()
+nuevo_usuario = Usercontroller()
 
 
 @router.post("/create_user")
