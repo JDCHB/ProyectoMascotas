@@ -93,7 +93,7 @@ class AtributoxUsuariocontroller():
             cursor = conn.cursor()
             cursor.execute(
                 "UPDATE atributoxusuario SET id_usuario	= %s, id_atributo = %s, valor = %s, descripcion = %s WHERE id = %s",
-                (atributoxusuario.id_usuario, atributoxusuario.id_usuario,
+                (atributoxusuario.id_usuario, atributoxusuario.id_atributo,
                  atributoxusuario.valor, atributoxusuario.descripcion, atributoxusuario_id,)
             )
             conn.commit()
