@@ -8,7 +8,7 @@ nuevo_atributo = Atributocontroller()
 
 @router.post("/create_atributo")
 async def create_atributo(atributo: Atributo):
-    rpta = nuevo_atributo.create_mascota(atributo)
+    rpta = nuevo_atributo.create_atributo(atributo)
     return rpta
 
 
