@@ -86,7 +86,7 @@ class Rolescontroller():
             cursor = conn.cursor()
             cursor.execute(
                 "UPDATE roles SET nombre = %s, WHERE id = %s",
-                (roles.nombre, rol_id)
+                (roles.nombre, rol_id,)
             )
             conn.commit()
 
