@@ -12,8 +12,8 @@ class Mascotacontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO mascota (nombre,tipo_mascota,id_propietario,coordenadas, estado) VALUES (%s, %s, %s, %s, %s)",
-                           (mascota.nombre, mascota.tipo_mascota, mascota.id_propietario, mascota.coordenadas, mascota.estado))
+            cursor.execute("INSERT INTO mascota (nombre,genero,id_tipo_mascota,id_propietario,coordenadas,estado) VALUES (%s, %s, %s, %s, %s, %s)",
+                           (mascota.nombre, mascota.genero, mascota.id_tipo_mascota, mascota.id_propietario, mascota.coordenadas, mascota.estado))
             conn.commit()
             conn.close()
             return {"resultado": "Mascota Registrada"}
@@ -36,11 +36,12 @@ class Mascotacontroller():
             content = {
                 "id": int(result[0]),
                 "nombre": result[1],
-                "tipo_mascota": result[2],
-                "id_propietario": int(result[3]),
-                "coordenadas": result[4],
-                "fecha_hora": result[5],
-                'estado': bool(result[6]),
+                "genero": result[2],
+                "id_tipo_mascota": result[3],
+                "id_propietario": int(result[4]),
+                "coordenadas": result[5],
+                "fecha_hora": result[6],
+                'estado': bool(result[7]),
             }
             payload.append(content)
 
@@ -48,7 +49,8 @@ class Mascotacontroller():
             if result:
                 return json_data
             else:
-                raise HTTPException(status_code=404, detail="User not found")
+                raise HTTPException(
+                    status_code=404, detail="Mascota not found")
 
         except mysql.connector.Error as err:
             conn.rollback()
@@ -68,11 +70,12 @@ class Mascotacontroller():
                 content = {
                     'id': int(data[0]),
                     'nombre': data[1],
-                    'tipo_mascota': data[2],
-                    'id_propietario': int(data[3]),
-                    'coordenadas': data[4],
-                    'fecha_hora': data[5],
-                    'estado': bool(data[2]),
+                    'genero': data[2],
+                    'id_tipo_mascota': data[3],
+                    'id_propietario': int(data[4]),
+                    'coordenadas': data[5],
+                    'fecha_hora': data[6],
+                    'estado': bool(data[7]),
                 }
                 payload.append(content)
                 content = {}
@@ -80,7 +83,8 @@ class Mascotacontroller():
             if result:
                 return {"resultado": json_data}
             else:
-                raise HTTPException(status_code=404, detail="User not found")
+                raise HTTPException(
+                    status_code=404, detail="Mascota not found")
 
         except mysql.connector.Error as err:
             conn.rollback()
@@ -92,12 +96,12 @@ class Mascotacontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("UPDATE mascota SET nombre = %s, tipo_mascota = %s, coordenadas = %s, estado = %s WHERE id = %s",
-                           (mascota.nombre, mascota.tipo_mascota, mascota.coordenadas, mascota.estado, mascota_id))
+            cursor.execute("UPDATE mascota SET nombre = %s, genero = %s, coordenadas = %s, estado = %s WHERE id = %s",
+                           (mascota.nombre, mascota.genero, mascota.coordenadas, mascota.estado, mascota_id))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(
-                    status_code=404, detail="mascota not found")
+                    status_code=404, detail="Mascota not found")
             return {"mensaje": "Datos de mascota actualizado exitosamente"}
         except mysql.connector.Error as err:
             raise HTTPException(status_code=500, detail=str(err))
@@ -114,7 +118,7 @@ class Mascotacontroller():
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(
-                    status_code=404, detail="mascota no encontrado")
+                    status_code=404, detail="Mascota no encontrada")
             return {"mensaje": "Mascota eliminada exitosamente"}
         except mysql.connector.Error as err:
             raise HTTPException(status_code=500, detail=str(err))
