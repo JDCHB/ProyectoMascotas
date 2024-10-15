@@ -4,6 +4,7 @@ from app.routes.atributo_routes import router as atributo_router
 from app.routes.atributoxusuario_routes import router as atributoxuser_router
 from app.routes.mascota_routes import router as mascota_router
 from app.routes.roles_routes import router as roles_router
+from app.routes.tipo_mascota_routes import router as tipo_mascota_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -28,6 +29,7 @@ app.include_router(atributo_router)
 app.include_router(atributoxuser_router)
 app.include_router(mascota_router)
 app.include_router(roles_router)
+app.include_router(tipo_mascota_router)
 
 
 if __name__ == "__main__":
