@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: brqxd0rfhpuczons9wai-mysql.services.clever-cloud.com:3306
--- Tiempo de generación: 15-10-2024 a las 20:38:23
+-- Tiempo de generación: 05-10-2024 a las 20:06:15
 -- Versión del servidor: 8.0.22-13
 -- Versión de PHP: 8.2.21
 
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `atributo` (
   `id` int NOT NULL,
-  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `descripcion` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descripcion` varchar(300) COLLATE utf8mb4_general_ci NOT NULL,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -40,6 +40,7 @@ CREATE TABLE `atributo` (
 
 INSERT INTO `atributo` (`id`, `nombre`, `descripcion`, `estado`) VALUES
 (1, 'Direccion', 'Direccion del dueño', 1),
+(2, 'Tipo', 'Tipo de Mascota', 1),
 (3, 'Nombre', 'Nombre del encargado', 1),
 (4, 'Direccion', 'Direccion del encargado', 1);
 
@@ -53,8 +54,8 @@ CREATE TABLE `atributoxusuario` (
   `id` int NOT NULL,
   `id_usuario` int NOT NULL,
   `id_atributo` int NOT NULL,
-  `valor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `valor` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -65,28 +66,13 @@ CREATE TABLE `atributoxusuario` (
 INSERT INTO `atributoxusuario` (`id`, `id_usuario`, `id_atributo`, `valor`, `descripcion`, `estado`) VALUES
 (6, 6, 1, 'Calle43 #5-A', 'Direccion del dueño de la mascota x', 1),
 (7, 7, 1, 'Carrera80 #54-A', 'Direccion del dueño de las mascotas llamadas Susi y Mishifu', 1),
+(10, 12, 2, 'Perro', 'Zeus es un perro de raza Pitbull y esta registrado con el ID 10', 1),
+(11, 7, 2, 'Perro', 'Susi es un perro de raza Pincher y esta registrado con el ID 7', 1),
+(12, 29, 2, 'Perro', 'Kratos es un perro de raza Pudull y esta registrado con el ID 11', 1),
+(13, 31, 2, 'Gato', 'Firulais es un gato de raza Egipcia y esta registrado con el ID 12', 1),
+(14, 14, 2, 'perro', 'Habib Tiene un perro', 1),
 (16, 14, 1, 'Carrera 51B', 'Direccion de Habib', 1),
 (17, 12, 1, 'Calle 38 14A', 'Direccion de Jesus', 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `genero_mascota`
---
-
-CREATE TABLE `genero_mascota` (
-  `id` int NOT NULL,
-  `genero` varchar(50) NOT NULL,
-  `estado` tinyint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `genero_mascota`
---
-
-INSERT INTO `genero_mascota` (`id`, `genero`, `estado`) VALUES
-(1, 'Macho', 1),
-(2, 'Hembra', 1);
 
 -- --------------------------------------------------------
 
@@ -96,11 +82,10 @@ INSERT INTO `genero_mascota` (`id`, `genero`, `estado`) VALUES
 
 CREATE TABLE `mascota` (
   `id` int NOT NULL,
-  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_genero_mascota` int NOT NULL,
-  `id_tipo_mascota` int NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `tipo_mascota` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `id_propietario` int NOT NULL,
-  `coordenadas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `coordenadas` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `fecha_hora` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -109,8 +94,19 @@ CREATE TABLE `mascota` (
 -- Volcado de datos para la tabla `mascota`
 --
 
-INSERT INTO `mascota` (`id`, `nombre`, `id_genero_mascota`, `id_tipo_mascota`, `id_propietario`, `coordenadas`, `fecha_hora`, `estado`) VALUES
-(2, 'Susi', 1, 1, 7, 'Soledad', '2024-10-15 20:07:08', 1);
+INSERT INTO `mascota` (`id`, `nombre`, `tipo_mascota`, `id_propietario`, `coordenadas`, `fecha_hora`, `estado`) VALUES
+(7, 'Susi', 'Perra', 7, 'Soledad', '2024-09-28 20:48:19', 1),
+(9, 'Destructor de universos', 'Chihuahua', 14, 'Barranquilla', '2024-10-02 17:53:18', 1),
+(10, 'Zeus', 'Perro', 12, 'Barranquilla', '2024-10-04 17:47:36', 1),
+(11, 'Kratos', 'Perro', 29, 'Barranquilla', '2024-10-04 17:48:03', 0),
+(12, 'Firulais', 'Gato', 31, 'Ponedera', '2024-10-04 17:49:06', 0),
+(13, 'Mishifu', 'Perro', 7, 'Soledad', '2024-10-04 17:49:36', 1),
+(14, 'Galaxy', 'Perro', 14, 'Ponedera', '2024-10-04 17:53:05', 0),
+(15, 'Junior', 'Gato', 27, 'Soledad', '2024-10-04 17:53:52', 1),
+(16, 'UNITY', 'Perro', 30, 'Soledad', '2024-10-04 17:54:35', 0),
+(17, 'Keilyn', 'Gato', 30, 'Soledad', '2024-10-04 17:55:00', 0),
+(19, 'Fenrir', 'Perro', 14, 'Asgard', '2024-10-04 19:24:53', 1),
+(21, 'Thor', 'Perro', 7, 'Soledad', '2024-10-05 03:53:36', 1);
 
 -- --------------------------------------------------------
 
@@ -120,7 +116,7 @@ INSERT INTO `mascota` (`id`, `nombre`, `id_genero_mascota`, `id_tipo_mascota`, `
 
 CREATE TABLE `roles` (
   `id` int NOT NULL,
-  `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nombre` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -139,37 +135,17 @@ INSERT INTO `roles` (`id`, `nombre`, `estado`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tipo_mascota`
---
-
-CREATE TABLE `tipo_mascota` (
-  `id` int NOT NULL,
-  `tp_mascota` varchar(50) NOT NULL,
-  `estado` tinyint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `tipo_mascota`
---
-
-INSERT INTO `tipo_mascota` (`id`, `tp_mascota`, `estado`) VALUES
-(1, 'Perro', 1),
-(2, 'Gato', 1);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `usuarios`
 --
 
 CREATE TABLE `usuarios` (
   `id` int NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `apellido` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `documento` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `telefono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `apellido` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `documento` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `telefono` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `id_rol` int DEFAULT NULL,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -215,31 +191,16 @@ ALTER TABLE `atributoxusuario`
   ADD KEY `id_atributo` (`id_atributo`);
 
 --
--- Indices de la tabla `genero_mascota`
---
-ALTER TABLE `genero_mascota`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `mascota`
 --
 ALTER TABLE `mascota`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_propietario` (`id_propietario`),
-  ADD KEY `id_tipo_mascota` (`id_tipo_mascota`),
-  ADD KEY `id_genero_mascota` (`id_genero_mascota`),
-  ADD KEY `id_genero_mascota_2` (`id_genero_mascota`);
+  ADD KEY `id_propietario` (`id_propietario`);
 
 --
 -- Indices de la tabla `roles`
 --
 ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `tipo_mascota`
---
-ALTER TABLE `tipo_mascota`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -266,28 +227,16 @@ ALTER TABLE `atributoxusuario`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT de la tabla `genero_mascota`
---
-ALTER TABLE `genero_mascota`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
 -- AUTO_INCREMENT de la tabla `mascota`
 --
 ALTER TABLE `mascota`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT de la tabla `tipo_mascota`
---
-ALTER TABLE `tipo_mascota`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -310,9 +259,7 @@ ALTER TABLE `atributoxusuario`
 -- Filtros para la tabla `mascota`
 --
 ALTER TABLE `mascota`
-  ADD CONSTRAINT `mascota_ibfk_1` FOREIGN KEY (`id_propietario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `mascota_ibfk_2` FOREIGN KEY (`id_tipo_mascota`) REFERENCES `tipo_mascota` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `mascota_ibfk_3` FOREIGN KEY (`id_genero_mascota`) REFERENCES `genero_mascota` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `mascota_ibfk_1` FOREIGN KEY (`id_propietario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuarios`

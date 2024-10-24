@@ -12,8 +12,8 @@ class Mascotacontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO mascota (nombre,id_genero_mascota,id_tipo_mascota,id_propietario,coordenadas,estado) VALUES (%s, %s, %s, %s, %s, %s)",
-                           (mascota.nombre, mascota.id_genero_mascota, mascota.id_tipo_mascota, mascota.id_propietario, mascota.coordenadas, mascota.estado))
+            cursor.execute("INSERT INTO mascota (nombre,id_genero_mascota,id_tipo_mascota,id_propietario,estado) VALUES (%s, %s, %s, %s, %s)",
+                           (mascota.nombre, mascota.id_genero_mascota, mascota.id_tipo_mascota, mascota.id_propietario, mascota.estado))
             conn.commit()
             conn.close()
             return {"resultado": "Mascota Registrada"}
@@ -39,9 +39,8 @@ class Mascotacontroller():
                 "id_genero_mascota": int(result[2]),
                 "id_tipo_mascota": int(result[3]),
                 "id_propietario": int(result[4]),
-                "coordenadas": result[5],
-                "fecha_hora": result[6],
-                'estado': bool(result[7]),
+                "fecha_hora": result[5],
+                'estado': bool(result[6]),
             }
             payload.append(content)
 
@@ -73,9 +72,8 @@ class Mascotacontroller():
                     'id_genero_mascota': int(data[2]),
                     'id_tipo_mascota': int(data[3]),
                     'id_propietario': int(data[4]),
-                    'coordenadas': data[5],
-                    'fecha_hora': data[6],
-                    'estado': bool(data[7]),
+                    'fecha_hora': data[5],
+                    'estado': bool(data[6]),
                 }
                 payload.append(content)
                 content = {}
@@ -96,8 +94,8 @@ class Mascotacontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("UPDATE mascota SET nombre = %s, genero = %s, coordenadas = %s, estado = %s WHERE id = %s",
-                           (mascota.nombre, mascota.genero, mascota.coordenadas, mascota.estado, mascota_id))
+            cursor.execute("UPDATE mascota SET nombre = %s, genero = %s, estado = %s WHERE id = %s",
+                           (mascota.nombre, mascota.genero, mascota.estado, mascota_id))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(
