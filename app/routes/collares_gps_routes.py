@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from app.models.collares_gps_model import Collares_GPS
-from app.controllers.genero_mascota_controller import *
+from app.controllers.collares_gps_controller import *
 router = APIRouter()
 
-nuevo_collares_gps = Collares_GPS()
+nuevo_collares_gps = CollarGPScontroller()
 
 
 @router.post("/create_collar_gps")
