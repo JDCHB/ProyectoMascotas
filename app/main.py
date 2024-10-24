@@ -6,6 +6,7 @@ from app.routes.mascota_routes import router as mascota_router
 from app.routes.roles_routes import router as roles_router
 from app.routes.tipo_mascota_routes import router as tipo_mascota_router
 from app.routes.genero_mascota_routes import router as genero_mascota_router
+from app.routes.collares_gps_routes import router as collares_gps_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -32,6 +33,7 @@ app.include_router(mascota_router)
 app.include_router(roles_router)
 app.include_router(tipo_mascota_router)
 app.include_router(genero_mascota_router)
+app.include_router(collares_gps_router)
 
 
 if __name__ == "__main__":
