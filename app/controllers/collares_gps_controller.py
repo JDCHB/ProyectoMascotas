@@ -12,7 +12,7 @@ class CollarGPScontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO collares_con_gps (numero_serie,ultima_ubicacion_registrada,nivel_bateria,fecha_hora_ultimo_reporte,id_mascota_vinculada,estado) VALUES (%s, %s, %s, %s, %s, %s)",
+            cursor.execute("INSERT INTO collares_con_gps (numero_serie,ultima_ubicacion_registrada,nivel_bateria,id_mascota_vinculada,estado) VALUES (%s, %s, %s, %s, %s)",
                            (collares_gps.numero_serie, collares_gps.ultima_ubicacion_registrada, collares_gps.nivel_bateria, collares_gps.fecha_hora_ultimo_reporte, collares_gps.id_mascota_vinculada, collares_gps.estado))
             conn.commit()
             conn.close()
