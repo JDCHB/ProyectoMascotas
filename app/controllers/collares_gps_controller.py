@@ -18,7 +18,6 @@ class CollarGPScontroller():
             conn.close()
             return {"resultado": "Collar Registrado"}
         except mysql.connector.Error as err:
-            print(f"Error durante la inserción: {err}")
             conn.rollback()
         finally:
             conn.close()
