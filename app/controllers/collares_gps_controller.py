@@ -18,6 +18,7 @@ class CollarGPScontroller():
             conn.close()
             return {"resultado": "Collar Registrado"}
         except mysql.connector.Error as err:
+            # (SI VUELVE A FALLAR ACTIVEN ESTO XD) print(f"Error durante la inserción: {err}")
             conn.rollback()
         finally:
             conn.close()
@@ -94,8 +95,8 @@ class CollarGPScontroller():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("UPDATE collares_con_gps SET numero_serie = %s, ultima_ubicacion_registrada = %s, nivel_bateria=%s,fecha_hora_ultimo_reporte=%s, id_mascota_vinculada=%s, estado = %s WHERE id = %s",
-                           (collares_gps.numero_serie, collares_gps.ultima_ubicacion_registrada, collares_gps.nivel_bateria, collares_gps.fecha_hora_ultimo_reporte, collares_gps.id_mascota_vinculada, collares_gps.estado, collargps_id))
+            cursor.execute("UPDATE collares_con_gps SET numero_serie = %s, ultima_ubicacion_registrada = %s, nivel_bateria=%s, id_mascota_vinculada=%s, estado = %s WHERE id = %s",
+                           (collares_gps.numero_serie, collares_gps.ultima_ubicacion_registrada, collares_gps.nivel_bateria, collares_gps.id_mascota_vinculada, collares_gps.estado, collargps_id))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(
