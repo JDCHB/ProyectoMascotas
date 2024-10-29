@@ -88,8 +88,7 @@ class Tipo_Mascota_controller():
             cursor = conn.cursor()
             cursor.execute(
                 "UPDATE tipo_mascota SET tp_mascota = %s, estado = %s WHERE id = %s",
-                (tipo_mascota.tp_mascota, tipo_mascota.estado,
-                 tipo_mascota.estado, tipo_mascota_id,)
+                (tipo_mascota.tp_mascota, tipo_mascota.estado, tipo_mascota_id,)
             )
             conn.commit()
 
