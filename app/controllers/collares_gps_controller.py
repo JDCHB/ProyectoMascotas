@@ -16,7 +16,7 @@ class CollarGPScontroller():
                            (collares_gps.numero_serie, collares_gps.latitud, collares_gps.longitud, collares_gps.nivel_bateria, collares_gps.id_mascota_vinculada, collares_gps.estado,))
             conn.commit()
             conn.close()
-            return {"resultado": "Collar Registrado"}
+            return {"resultado": "CollarGPS Registrado"}
         except mysql.connector.Error as err:
             # (SI VUELVE A FALLAR ACTIVEN ESTO XD) print(f"Error durante la inserción: {err}")
             conn.rollback()
@@ -51,7 +51,7 @@ class CollarGPScontroller():
                 return json_data
             else:
                 raise HTTPException(
-                    status_code=404, detail="Mascota not found")
+                    status_code=404, detail="CollarGPS not found")
 
         except mysql.connector.Error as err:
             conn.rollback()
