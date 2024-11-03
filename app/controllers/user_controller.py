@@ -15,7 +15,7 @@ class Usercontroller():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "SELECT * FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
+                "SELECT email, password FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
             conn.commit()
             conn.close()
             return {"resultado": "Inicio de sesion"}
