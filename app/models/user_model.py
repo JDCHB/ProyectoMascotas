@@ -11,3 +11,8 @@ class User(BaseModel):
     telefono: str
     id_rol: int
     estado: bool
+
+
+class Login(BaseModel):
+    email: str
+    password: str

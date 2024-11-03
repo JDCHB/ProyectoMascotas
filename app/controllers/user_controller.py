@@ -2,7 +2,7 @@ import mysql.connector
 from fastapi import HTTPException, UploadFile
 import pandas as pd
 from app.config.db_config import get_db_connection
-from app.models.user_model import User
+from app.models.user_model import User, Login
 from fastapi.encoders import jsonable_encoder
 
 
@@ -10,7 +10,7 @@ class Usercontroller():
 
     # LOGIN
 
-    def login(self, user: User):
+    def login(self, user: Login):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
