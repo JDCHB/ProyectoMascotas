@@ -16,9 +16,24 @@ class Usercontroller():
             cursor = conn.cursor()
             cursor.execute(
                 "SELECT email, password FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
-            conn.commit()
-            conn.close()
-            return {"resultado": "Inicio de sesion exitoso"}
+            result = cursor.fetchall()
+            payload = []
+            content = {}
+            for data in result:
+                content = {
+                    'id': data[0],
+                    'usuario': data[1],
+                    'password': data[2],
+                    # 'nombre': data[3],
+
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)
+            if result:
+                return {"resultado": json_data}
+            else:
+                raise HTTPException(status_code=404, detail="User not found")
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
