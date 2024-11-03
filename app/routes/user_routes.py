@@ -6,6 +6,12 @@ router = APIRouter()
 nuevo_usuario = Usercontroller()
 
 
+@router.post("/login")
+async def login_user(user: User):
+    rpta = nuevo_usuario.login_user(user)
+    return rpta
+
+
 @router.post("/create_user")
 async def create_user(user: User):
     rpta = nuevo_usuario.create_user(user)

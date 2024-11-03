@@ -8,7 +8,24 @@ from fastapi.encoders import jsonable_encoder
 
 class Usercontroller():
 
+    # LOGIN
+
+    def Login(self, user: User):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT * FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
+            conn.commit()
+            conn.close()
+            return {"resultado": "Usuario registrado"}
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+
     # Cargue Masivo
+
     def create_usuario_masivo(self, file: UploadFile):
         conn = None
         try:
