@@ -8,8 +8,8 @@ nuevo_usuario = Usercontroller()
 
 
 @router.post("/login")
-async def login_user(user: Login):
-    rpta = nuevo_usuario.login_user(user)
+async def login(user: Login):
+    rpta = nuevo_usuario.login(user)
     return rpta
 
 
