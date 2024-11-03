@@ -10,7 +10,7 @@ class Usercontroller():
 
     # LOGIN
 
-    def Login(self, user: User):
+    def login(self, user: User):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
