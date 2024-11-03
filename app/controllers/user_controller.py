@@ -18,7 +18,7 @@ class Usercontroller():
                 "SELECT email, password FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
             conn.commit()
             conn.close()
-            return {"resultado": "Inicio de sesion"}
+            return {"resultado": "Inicio de sesion exitoso"}
         except mysql.connector.Error as err:
             conn.rollback()
         finally:
