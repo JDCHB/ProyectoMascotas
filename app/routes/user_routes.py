@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from app.models.user_model import User
 from app.controllers.user_controller import *
+
 router = APIRouter()
 
 nuevo_usuario = Usercontroller()

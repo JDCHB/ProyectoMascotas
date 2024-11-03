@@ -11,6 +11,16 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+# Configura el middleware CORS
+app.add_middleware(
+    CORSMiddleware,
+    # Permitir el origen de tu aplicación Svelte
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir todos los métodos (GET, POST, etc.)
+    allow_headers=["*"],  # Permitir todos los headers
+)
+
 origins = [
     # "http://localhost.tiangolo.com",
     # "https://localhost.tiangolo.com",
