@@ -7,6 +7,40 @@ from fastapi.encoders import jsonable_encoder
 
 class Mascotacontroller():
 
+    #MASCOTASCXDE
+    def get_mascotas_R(self, fecha1: int, fecha2: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT * FROM mascota WHERE fecha_hora BETWEEN %s AND %s", (fecha1, fecha2))
+            result = cursor.fetchone()
+            payload = []
+            content = {}
+
+            content = {
+                "id": int(result[0]),
+                "nombre": result[1],
+                "id_genero_mascota": int(result[2]),
+                "id_tipo_mascota": int(result[3]),
+                "id_propietario": int(result[4]),
+                "fecha_hora": result[5],
+                'estado': bool(result[6]),
+            }
+            payload.append(content)
+
+            json_data = jsonable_encoder(content)
+            if result:
+                return json_data
+            else:
+                raise HTTPException(
+                    status_code=404, detail="Mascota not found")
+
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+
     # CREAR MASCOTA
     def create_mascota(self, mascota: Mascotas):
         try:
