@@ -7,6 +7,11 @@ router = APIRouter()
 nueva_mascota = Mascotacontroller()
 
 
+@router.get("/get_mascotas_R/")
+async def get_mascotas_R():
+    rpta = nueva_mascota.get_mascotas_R()
+    return rpta
+
 @router.post("/create_mascota")
 async def create_mascota(mascota: Mascotas):
     rpta = nueva_mascota.create_mascota(mascota)
