@@ -15,7 +15,7 @@ class Usercontroller():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "SELECT id, email, password FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
+                "SELECT id, email, password, id_rol FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
             result = cursor.fetchall()
             payload = []
             content = {}
@@ -24,6 +24,7 @@ class Usercontroller():
                     'id': data[0],
                     'email': data[1],
                     'password': data[2],
+                    'id_rol': data[3]
                     # 'nombre': data[3],
                 }
                 payload.append(content)

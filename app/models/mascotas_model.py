@@ -8,3 +8,4 @@ class Mascotas(BaseModel):
     id_tipo_mascota: int
     id_propietario: int
     estado: bool
+    
