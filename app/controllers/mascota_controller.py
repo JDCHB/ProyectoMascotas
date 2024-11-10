@@ -13,7 +13,7 @@ class Mascotacontroller():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "SELECT * FROM mascota WHERE fecha_hora BETWEEN %s AND %s", (fecha1, fecha2))
+                "SELECT id, nombre, id_genero_mascota, id_tipo_mascota, id_propietario, fecha_hora, estado AS reporte_mascota FROM mascota  INNER JOIN genero_mascota AS genero ON  mascota.id_genero_mascota = genero_mascota.id INNER JOIN tipo_mascota AS tipo ON mascota.id_tipo_mascota = tipo_mascota.id INNER JOIN usuario AS dueño ON mascota.id_propietario=usuario.id WHERE mascota.fecha_hora BETWEEN %s AND  %s", (fecha1, fecha2))
             result = cursor.fetchone()
             payload = []
             content = {}
