@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.models.mascotas_model import Mascotas
+from app.models.reporte_mascota_model import ReporteMascota
 from app.controllers.mascota_controller import *
 
 router = APIRouter()
@@ -7,9 +8,9 @@ router = APIRouter()
 nueva_mascota = Mascotacontroller()
 
 
-@router.get("/get_mascotas_R/")
-async def get_mascotas_R():
-    rpta = nueva_mascota.get_mascotas_R()
+@router.post("/Mascotas_Report/")
+async def Mascotas_Report(reportemascota: ReporteMascota):
+    rpta = nueva_mascota.Mascotas_Report(reportemascota)
     return rpta
 
 @router.post("/create_mascota")

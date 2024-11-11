@@ -2,36 +2,55 @@ import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
 from app.models.mascotas_model import Mascotas
+from app.models.reporte_mascota_model import MascotasReport
 from fastapi.encoders import jsonable_encoder
 
 
 class Mascotacontroller():
 
-    #MASCOTASCXDE
-    def get_mascotas_R(self, fecha1: int, fecha2: int):
+    #MASCOTAS REPORTE
+    def Mascotas_Report(self, mascotasreport: MascotasReport):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "SELECT id, nombre, id_genero_mascota, id_tipo_mascota, id_propietario, fecha_hora, estado AS reporte_mascota FROM mascota  INNER JOIN genero_mascota AS genero ON  mascota.id_genero_mascota = genero_mascota.id INNER JOIN tipo_mascota AS tipo ON mascota.id_tipo_mascota = tipo_mascota.id INNER JOIN usuario AS dueño ON mascota.id_propietario=usuario.id WHERE mascota.fecha_hora BETWEEN %s AND  %s", (fecha1, fecha2))
-            result = cursor.fetchone()
+                """SELECT 
+                    mascota.id AS id_mascota, 
+                    mascota.nombre, 
+                    mascota.id_genero_mascota, 
+                    mascota.id_tipo_mascota, 
+                    mascota.id_propietario, 
+                    mascota.fecha_hora, 
+                    mascota.estado AS reporte_mascota 
+                    FROM 
+                        mascota 
+                    INNER JOIN 
+                        genero_mascota AS genero ON mascota.id_genero_mascota = genero.id
+                    INNER JOIN 
+                        tipo_mascota AS tipo ON mascota.id_tipo_mascota = tipo.id
+                    INNER JOIN 
+                        usuarios AS dueño ON mascota.id_propietario = dueño.id
+                    WHERE 
+                        mascota.fecha_hora BETWEEN %s AND %s
+                    LIMIT 0, 25;""", (mascotasreport.fecha1, mascotasreport.fecha2))
+            result = cursor.fetchall()
             payload = []
             content = {}
-
-            content = {
-                "id": int(result[0]),
-                "nombre": result[1],
-                "id_genero_mascota": int(result[2]),
-                "id_tipo_mascota": int(result[3]),
-                "id_propietario": int(result[4]),
-                "fecha_hora": result[5],
-                'estado': bool(result[6]),
-            }
-            payload.append(content)
-
-            json_data = jsonable_encoder(content)
+            for data in result:
+                content = {
+                    'id': int(data[0]),
+                    'nombre': data[1],
+                    'id_genero_mascota': int(data[2]),
+                    'id_tipo_mascota': int(data[3]),
+                    'id_propietario': int(data[4]),
+                    'fecha_hora': data[5],
+                    'estado': bool(data[6]),
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)
             if result:
-                return json_data
+                return {"resultado": json_data}
             else:
                 raise HTTPException(
                     status_code=404, detail="Mascota not found")
