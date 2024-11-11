@@ -8,7 +8,7 @@ router = APIRouter()
 nueva_mascota = Mascotacontroller()
 
 
-@router.post("/Mascotas_Report/")
+@router.post("/Mascotas_Report")
 async def Mascotas_Report(reportemascota: ReporteMascota):
     rpta = nueva_mascota.Mascotas_Report(reportemascota)
     return rpta
