@@ -14,10 +14,12 @@ async def Mascotas_Map(mascotamap: MascotasMap):
     rpta = nueva_mascota.Mascotas_Map(mascotamap)
     return rpta
 
+
 @router.post("/Mascotas_Report")
 async def Mascotas_Report(mascotasreport: MascotasReport):
     rpta = nueva_mascota.Mascotas_Report(mascotasreport)
     return rpta
+
 
 @router.post("/create_mascota")
 async def create_mascota(mascota: Mascotas):
