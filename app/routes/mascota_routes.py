@@ -1,12 +1,18 @@
 from fastapi import APIRouter, HTTPException
 from app.models.mascotas_model import Mascotas
 from app.models.reporte_mascota_model import MascotasReport
+from app.models.mascota_map_model import MascotasMap
 from app.controllers.mascota_controller import *
 
 router = APIRouter()
 
 nueva_mascota = Mascotacontroller()
 
+
+@router.post("/Mascotas_Map")
+async def Mascotas_Map(mascotamap: MascotasMap):
+    rpta = nueva_mascota.Mascotas_Map(mascotamap)
+    return rpta
 
 @router.post("/Mascotas_Report")
 async def Mascotas_Report(mascotasreport: MascotasReport):

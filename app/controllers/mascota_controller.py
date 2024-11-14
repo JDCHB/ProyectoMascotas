@@ -3,10 +3,47 @@ from fastapi import HTTPException
 from app.config.db_config import get_db_connection
 from app.models.mascotas_model import Mascotas
 from app.models.reporte_mascota_model import MascotasReport
+from app.models.mascota_map_model import MascotaMap
 from fastapi.encoders import jsonable_encoder
 
 
 class Mascotacontroller():
+
+
+    #MAPA MASCOTAS
+    def Mascotas_Map(self, mascotamap: MascotaMap):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                """SELECT m.nombre AS nombre_mascota, c.latitud, c.longitud
+                    FROM mascota m
+                    JOIN coordenada c ON m.id = c.id_mascota
+                    WHERE m.id_propietario = 81
+                    ORDER BY m.nombre, c.create_f DESC;""", 
+                    (mascotamap.nombre_mascota, mascotamap.latitud, mascotamap.longitud))
+            result = cursor.fetchall()
+            payload = []
+            content = {}
+            for data in result:
+                content = {
+                    'nombre_mascota': int(data[0]),
+                    'latitud': data[1],
+                    'longitud': int(data[2]),
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)
+            if result:
+                return {"resultado": json_data}
+            else:
+                raise HTTPException(
+                    status_code=404, detail="Mascota not found")
+
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
 
     #MASCOTAS REPORTE
     def Mascotas_Report(self, mascotasreport: MascotasReport):
