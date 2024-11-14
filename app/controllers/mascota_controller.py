@@ -3,7 +3,7 @@ from fastapi import HTTPException
 from app.config.db_config import get_db_connection
 from app.models.mascotas_model import Mascotas
 from app.models.reporte_mascota_model import MascotasReport
-from app.models.mascota_map_model import MascotaMap
+from app.models.mascota_map_model import MascotasMap
 from fastapi.encoders import jsonable_encoder
 
 
@@ -11,7 +11,7 @@ class Mascotacontroller():
 
 
     #MAPA MASCOTAS
-    def Mascotas_Map(self, mascotamap: MascotaMap):
+    def Mascotas_Map(self, mascotamap: MascotasMap):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
