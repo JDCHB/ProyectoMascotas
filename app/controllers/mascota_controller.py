@@ -15,12 +15,24 @@ class Mascotacontroller():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                """SELECT m.nombre AS nombre_mascota, c.latitud, c.longitud
-               FROM mascota m
-               JOIN coordenada c ON m.id = c.id_mascota
-               WHERE m.id_propietario = %s
-               ORDER BY m.nombre, c.create_f DESC
-               LIMIT 25;""",
+                """SELECT 
+                    m.nombre AS nombre_mascota, 
+                    c.latitud, 
+                    c.longitud, 
+                    cgps.numero_serie, 
+                    cgps.nivel_bateria
+                FROM 
+                    mascota m
+                JOIN 
+                    coordenada c ON m.id = c.id_mascota
+                LEFT JOIN 
+                    collares_con_gps cgps ON cgps.id_mascota_vinculada = m.id
+                WHERE 
+                    m.id_propietario = %s
+                ORDER BY 
+                    m.nombre, c.create_f DESC
+                LIMIT 25;
+                """,
                 (mascotamap.user_id,)
             )
             result = cursor.fetchall()
