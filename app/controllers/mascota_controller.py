@@ -9,7 +9,6 @@ from fastapi.encoders import jsonable_encoder
 
 class Mascotacontroller():
 
-    # MAPA MASCOTAS
     def Mascotas_Map(self, mascotamap: MascotasMap):
         try:
             conn = get_db_connection()
@@ -43,7 +42,9 @@ class Mascotacontroller():
                 content = {
                     'nombre_mascota': data[0],
                     'latitud': data[1],
-                    'longitud': data[2]
+                    'longitud': data[2],
+                    'numero_serie': data[3],  # Agregamos numero_serie
+                    'nivel_bateria': data[4]  # Agregamos nivel_bateria
                 }
                 payload.append(content)
 
