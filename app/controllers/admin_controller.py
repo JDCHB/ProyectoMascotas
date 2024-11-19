@@ -22,11 +22,11 @@ class AdminController():
             # Inserta el nuevo collar
             cursor.execute(
                 """
-                INSERT INTO collares_con_gps (numero_serie, id_mascota_vinculada, estado)
-                VALUES (%s, %s, %s)
+                INSERT INTO collares_con_gps (numero_serie, id_mascota_vinculada, nivel_bateria, estado)
+                VALUES (%s, %s, %s, %s)
                 """,
                 (nuevocollar.numero_serie,
-                 nuevocollar.id_mascota_vinculada, nuevocollar.estado)
+                 nuevocollar.id_mascota_vinculada, nuevocollar.nivel_bateria, nuevocollar.estado)
             )
             conn.commit()
             return {"resultado": "Collar registrado exitosamente"}
