@@ -9,5 +9,5 @@ nuevo_admin = AdminController()
 
 @router.post("/create_collar")
 async def create_collar(nuevocollar: NuevoCollar):
-    rpta = NuevoCollar.create_collar(nuevocollar)
+    rpta = nuevo_admin.create_collar(nuevocollar)
     return rpta
