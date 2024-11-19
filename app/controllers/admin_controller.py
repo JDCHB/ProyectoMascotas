@@ -25,7 +25,8 @@ class AdminController():
                 INSERT INTO collares_con_gps (numero_serie, id_mascota_vinculada, estado)
                 VALUES (%s, %s, %s)
                 """,
-                (nuevocollar.numero_serie, nuevocollar.id_mascota_vinculada, 'activo')
+                (nuevocollar.numero_serie,
+                 nuevocollar.id_mascota_vinculada, nuevocollar.estado)
             )
             conn.commit()
             return {"resultado": "Collar registrado exitosamente"}
