@@ -8,6 +8,8 @@ from datetime import datetime, timedelta
 import jwt
 
 
+    SECRET_KEY = "PetTrackerOF"
+
 class Usercontroller():
 
     #CREAR TOCKEN
