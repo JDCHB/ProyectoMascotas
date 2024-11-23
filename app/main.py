@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+SECRET_KEY = "PetTrackerOF"
 
 app.add_middleware(
     CORSMiddleware,

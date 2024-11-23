@@ -7,6 +7,16 @@ router = APIRouter()
 nuevo_usuario = Usercontroller()
 
 
+@router.post("/generate_token")
+async def generate_token(email: str, password: str):
+    rpta = nuevo_usuario.generate_token(email, password)
+    return rpta
+
+@router.get("/verify_token")
+async def verify_token(token: str):
+    rpta = nuevo_usuario.verify_token(token)
+    return rpta
+
 @router.post("/login")
 async def login(user: Login):
     rpta = nuevo_usuario.login(user)
@@ -20,10 +30,9 @@ async def create_user(user: User):
 
 # CARGUE MASIVO
 
-
 @router.post("/create_usuario_masivo")
 async def create_usuario_masivo(file: UploadFile = File(...)):
-    rpta = nuevo_usuario.create_usuario_masivo(file)  # Esto está bien
+    rpta = nuevo_usuario.create_usuario_masivo(file)
     return rpta
 
 # FIN CARGUE MASIVO
