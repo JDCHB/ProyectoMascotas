@@ -7,17 +7,18 @@ from fastapi.encoders import jsonable_encoder
 from datetime import datetime, timedelta
 import jwt
 
+SECRET_KEY = "PetTrackerOF"
 
 class Usercontroller():
-
+    
     #CREAR TOCKEN
     def create_access_token(data: dict, expires_delta: timedelta = None):
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-        to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm="HS256")
-    return encoded_jwt
+        to_encode = data.copy()
+        if expires_delta:
+            expire = datetime.utcnow() + expires_delta
+            to_encode.update({"exp": expire})
+        encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm="HS256")
+        return encoded_jwt
 
     #GENERAR EL TOKEN
     async def generate_token(email: str, password: str):
