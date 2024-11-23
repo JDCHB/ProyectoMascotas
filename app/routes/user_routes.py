@@ -8,8 +8,8 @@ nuevo_usuario = Usercontroller()
 
 
 @router.post("/generate_token")
-async def generate_token(email: str, password: str):
-    rpta = nuevo_usuario.generate_token(email, password)
+async def generate_token(user: Login):
+    rpta = nuevo_usuario.generate_token(user)
     return rpta
 
 @router.post("/verify_token")
