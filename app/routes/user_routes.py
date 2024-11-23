@@ -12,7 +12,7 @@ async def generate_token(email: str, password: str):
     rpta = nuevo_usuario.generate_token(email, password)
     return rpta
 
-@router.get("/verify_token")
+@router.post("/verify_token")
 async def verify_token(token: str):
     rpta = nuevo_usuario.verify_token(token)
     return rpta
