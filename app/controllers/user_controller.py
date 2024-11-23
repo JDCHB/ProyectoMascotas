@@ -8,8 +8,6 @@ from datetime import datetime, timedelta
 import jwt
 
 
-    SECRET_KEY = "PetTrackerOF"
-
 class Usercontroller():
 
     #CREAR TOCKEN
@@ -32,7 +30,7 @@ class Usercontroller():
             content = {}
     if result:
         access_token_expires = timedelta(minutes=5)
-        access_token = create_access_token(
+        access_token = self.create_access_token(
             data={"sub": email}, expires_delta=access_token_expires
         )
         return {"access_token": access_token}
