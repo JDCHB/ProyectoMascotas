@@ -29,7 +29,7 @@ class Usercontroller():
             "SELECT id, email, password, id_rol FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
         result = cursor.fetchall()
         payload = []
-            content = {}
+        content = {}
         if result:
             access_token_expires = timedelta(minutes=5)
             access_token = self.create_access_token(
@@ -41,13 +41,13 @@ class Usercontroller():
 
     #VERIFICAR EL TOKEN
     async def verify_token(token: str):
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-        return {"message": "Token válido"}
-    except jwt.ExpiredSignatureError:
-        return {"message": "Token expirado"}
-    except jwt.InvalidTokenError:
-        return {"message": "Token inválido"}
+        try:
+            payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            return {"message": "Token válido"}
+        except jwt.ExpiredSignatureError:
+            return {"message": "Token expirado"}
+        except jwt.InvalidTokenError:
+            return {"message": "Token inválido"}
 
     
 
