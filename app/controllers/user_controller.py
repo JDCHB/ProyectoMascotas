@@ -31,6 +31,7 @@ class Usercontroller():
         payload = []
         content = {}
         if result:
+            print(result)
             access_token_expires = timedelta(minutes=5)
             access_token = self.create_access_token(
                 data={"email": result[1]}, expires_delta=access_token_expires
