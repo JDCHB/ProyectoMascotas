@@ -1,6 +1,7 @@
 fastapi
 uvicorn
 mysql-connector-python
+jwt
 pandas==2.2.3  
 openpyxl==3.1.5
 python-multipart==0.0.10
