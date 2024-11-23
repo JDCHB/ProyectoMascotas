@@ -20,6 +20,7 @@ class Usercontroller():
         encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm="HS256")
         return encoded_jwt
 
+
     #GENERAR EL TOKEN
     async def generate_token(email: str, password: str):
         conn = get_db_connection()
@@ -29,14 +30,14 @@ class Usercontroller():
             result = cursor.fetchall()
             payload = []
             content = {}
-    if result:
-        access_token_expires = timedelta(minutes=5)
-        access_token = self.create_access_token(
-            data={"sub": email}, expires_delta=access_token_expires
-        )
-        return {"access_token": access_token}
-    else:
-        return {"message": "Credenciales incorrectas"}
+        if result:
+            access_token_expires = timedelta(minutes=5)
+            access_token = self.create_access_token(
+                data={"sub": email}, expires_delta=access_token_expires
+            )
+            return {"access_token": access_token}
+        else:
+            return {"message": "Credenciales incorrectas"}
 
     #VERIFICAR EL TOKEN
     async def verify_token(token: str):
