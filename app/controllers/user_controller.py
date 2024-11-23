@@ -24,11 +24,11 @@ class Usercontroller():
     #GENERAR EL TOKEN
     async def generate_token(email: str, password: str):
         conn = get_db_connection()
-            cursor = conn.cursor()
-            cursor.execute(
-                "SELECT id, email, password, id_rol FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
-            result = cursor.fetchall()
-            payload = []
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT id, email, password, id_rol FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
+        result = cursor.fetchall()
+        payload = []
             content = {}
         if result:
             access_token_expires = timedelta(minutes=5)
