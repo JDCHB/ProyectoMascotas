@@ -27,13 +27,13 @@ class Usercontroller():
         cursor = conn.cursor()
         cursor.execute(
             "SELECT id, email, password, id_rol FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
-        result = cursor.fetchall()
+        result = cursor.fetchone()
         payload = []
         content = {}
         if result:
             access_token_expires = timedelta(minutes=5)
             access_token = self.create_access_token(
-                data={"sub": email}, expires_delta=access_token_expires
+                data={"email": result[1]}, expires_delta=access_token_expires
             )
             return {"access_token": access_token}
         else:
