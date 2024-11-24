@@ -12,7 +12,7 @@ SECRET_KEY = "PetTrackerOF"
 class Usercontroller():
     
     #CREAR TOCKEN
-    def create_access_token(data: dict, expires_delta: timedelta = None):
+    def create_access_token(self, data: dict, expires_delta: timedelta = None):
         to_encode = data.copy()
         if expires_delta:
             expire = datetime.utcnow() + expires_delta
@@ -31,7 +31,6 @@ class Usercontroller():
         payload = []
         content = {}
         if result:
-            print(result)
             access_token_expires = timedelta(minutes=5)
             access_token = self.create_access_token(
                 data={"sub": user.email}, expires_delta=access_token_expires
@@ -41,7 +40,7 @@ class Usercontroller():
             return {"message": "Credenciales incorrectas"}
 
     #VERIFICAR EL TOKEN
-    async def verify_token(token: str):
+    async def verify_token(self, token: str):
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
             return {"message": "Token válido"}
