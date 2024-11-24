@@ -7,9 +7,9 @@ router = APIRouter()
 nuevo_usuario = Usercontroller()
 
 
-@router.post("/generate_token")
-async def generate_token(user: Login):
-    rpta = await nuevo_usuario.generate_token(user)
+@router.post("/login_generate_token")
+async def login_generate_token(user: Login):
+    rpta = await nuevo_usuario.login_generate_token(user)
     return rpta
 
 @router.post("/verify_token")

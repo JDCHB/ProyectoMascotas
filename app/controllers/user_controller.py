@@ -22,7 +22,7 @@ class Usercontroller():
 
 
     #GENERAR EL TOKEN
-    async def generate_token(self, user: Login):
+    async def login_generate_token(self, user: Login):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
