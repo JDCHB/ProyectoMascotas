@@ -23,21 +23,47 @@ class Usercontroller():
 
     #GENERAR EL TOKEN
     async def generate_token(self, user: Login):
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute(
-            "SELECT id, email, password, id_rol FROM usuarios WHERE email = %s AND password = %s", (user.email, user.password))
-        result = cursor.fetchone()
-        payload = []
-        content = {}
-        if result:
-            access_token_expires = timedelta(minutes=5)
-            access_token = self.create_access_token(
-                data={"sub": user.email}, expires_delta=access_token_expires
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            # Consulta para validar usuario y obtener sus datos
+            cursor.execute(
+                "SELECT id, email, password, id_rol FROM usuarios WHERE email = %s AND password = %s", 
+                (user.email, user.password)
             )
-            return {"access_token": access_token}
-        else:
-            return {"message": "Credenciales incorrectas"}
+            result = cursor.fetchone()
+
+            if result:
+                # Generar token
+                access_token_expires = timedelta(minutes=5)
+                access_token = self.create_access_token(
+                    data={"sub": result[1]},  # Usa el email como "sub" en el token
+                    expires_delta=access_token_expires
+                )
+
+                # Preparar los datos del usuario
+                user_data = {
+                    "id": result[0],
+                    "email": result[1],
+                    "id_rol": result[3]
+                }
+
+                # Retornar token y datos del usuario
+                return {
+                    "access_token": access_token,
+                    "token_type": "bearer",
+                    "user_data": jsonable_encoder(user_data)  # Convertir a JSON seguro
+                }
+            else:
+                raise HTTPException(status_code=401, detail="Credenciales incorrectas")
+
+        except mysql.connector.Error as err:
+            conn.rollback()
+            raise HTTPException(status_code=500, detail="Error interno en la base de datos")
+        finally:
+            conn.close()
+
 
     #VERIFICAR EL TOKEN
     async def verify_token(self, token: str):
