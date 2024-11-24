@@ -14,7 +14,7 @@ async def generate_token(user: Login):
 
 @router.post("/verify_token")
 async def verify_token(token: str):
-    rpta = nuevo_usuario.verify_token(token)
+    rpta = await nuevo_usuario.verify_token(token)
     return rpta
 
 @router.post("/login")
