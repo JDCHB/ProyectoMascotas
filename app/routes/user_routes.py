@@ -9,7 +9,7 @@ nuevo_usuario = Usercontroller()
 
 @router.post("/generate_token")
 async def generate_token(user: Login):
-    rpta = nuevo_usuario.generate_token(user)
+    rpta = await nuevo_usuario.generate_token(user)
     return rpta
 
 @router.post("/verify_token")
