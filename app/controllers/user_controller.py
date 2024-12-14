@@ -74,7 +74,7 @@ class Usercontroller():
     async def verify_token(self, token: Token):
 
         try:
-            payload = jwt.decode(token.token SECRET_KEY, algorithms=["HS256"])
+            payload = jwt.decode(token.token, SECRET_KEY, algorithms=["HS256"])
             return {"message": "Token válido"}
         except jwt.ExpiredSignatureError:
             return {"message": "Token expirado"}
