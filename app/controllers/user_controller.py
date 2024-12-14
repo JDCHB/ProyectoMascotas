@@ -2,16 +2,17 @@ import mysql.connector
 from fastapi import HTTPException, UploadFile
 import pandas as pd
 from app.config.db_config import get_db_connection
-from app.models.user_model import User, Login
+from app.models.user_model import User, Login, Token
 from fastapi.encoders import jsonable_encoder
 from datetime import datetime, timedelta
 import jwt
 
 SECRET_KEY = "PetTrackerOF"
 
+
 class Usercontroller():
-    
-    #CREAR TOCKEN
+
+    # CREAR TOCKEN
     def create_access_token(self, data: dict, expires_delta: timedelta = None):
         to_encode = data.copy()
         if expires_delta:
@@ -20,8 +21,8 @@ class Usercontroller():
         encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm="HS256")
         return encoded_jwt
 
+    # GENERAR EL TOKEN
 
-    #GENERAR EL TOKEN
     async def login_generate_token(self, user: Login):
         try:
             conn = get_db_connection()
@@ -29,7 +30,7 @@ class Usercontroller():
 
             # Consulta para validar usuario y obtener sus datos
             cursor.execute(
-                "SELECT id, email, password, id_rol FROM usuarios WHERE email = %s AND password = %s", 
+                "SELECT id, email, password, id_rol FROM usuarios WHERE email = %s AND password = %s",
                 (user.email, user.password)
             )
             result = cursor.fetchone()
@@ -38,7 +39,8 @@ class Usercontroller():
                 # Generar token
                 access_token_expires = timedelta(minutes=5)
                 access_token = self.create_access_token(
-                    data={"sub": result[1]},  # Usa el email como "sub" en el token
+                    # Usa el email como "sub" en el token
+                    data={"sub": result[1]},
                     expires_delta=access_token_expires
                 )
 
@@ -53,29 +55,31 @@ class Usercontroller():
                 return {
                     "access_token": access_token,
                     "token_type": "bearer",
-                    "user_data": jsonable_encoder(user_data)  # Convertir a JSON seguro
+                    # Convertir a JSON seguro
+                    "user_data": jsonable_encoder(user_data)
                 }
             else:
-                raise HTTPException(status_code=401, detail="Credenciales incorrectas")
+                raise HTTPException(
+                    status_code=401, detail="Credenciales incorrectas")
 
         except mysql.connector.Error as err:
             conn.rollback()
-            raise HTTPException(status_code=500, detail="Error interno en la base de datos")
+            raise HTTPException(
+                status_code=500, detail="Error interno en la base de datos")
         finally:
             conn.close()
 
+    # VERIFICAR EL TOKEN
 
-    #VERIFICAR EL TOKEN
-    async def verify_token(self, token: str):
+    async def verify_token(self, token: Token):
+
         try:
-            payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            payload = jwt.decode(token.token SECRET_KEY, algorithms=["HS256"])
             return {"message": "Token válido"}
         except jwt.ExpiredSignatureError:
             return {"message": "Token expirado"}
         except jwt.InvalidTokenError:
             return {"message": "Token inválido"}
-
-    
 
     # LOGIN
 

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
-from app.models.user_model import User, Login
+from app.models.user_model import User, Login, Token
 from app.controllers.user_controller import *
 
 router = APIRouter()
@@ -12,10 +12,12 @@ async def login_generate_token(user: Login):
     rpta = await nuevo_usuario.login_generate_token(user)
     return rpta
 
+
 @router.post("/verify_token")
-async def verify_token(token: str):
+async def verify_token(token: Token):
     rpta = await nuevo_usuario.verify_token(token)
     return rpta
+
 
 @router.post("/login")
 async def login(user: Login):
@@ -29,6 +31,7 @@ async def create_user(user: User):
     return rpta
 
 # CARGUE MASIVO
+
 
 @router.post("/create_usuario_masivo")
 async def create_usuario_masivo(file: UploadFile = File(...)):
