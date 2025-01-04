@@ -198,8 +198,10 @@ class Usercontroller():
 
         except mysql.connector.Error as err:
             conn.rollback()
+            return {"error": f"Database error: {err}"}
         finally:
-            conn.close()
+            if conn:
+                conn.close()
 
     # VER USUARIOS
     def get_users(self):

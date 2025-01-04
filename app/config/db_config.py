@@ -10,6 +10,8 @@ def get_db_connection():
         database="mascotas"
     )"""
 
+# MASCOTAS
+
 
 def get_db_connection():
     return mysql.connector.connect(
@@ -27,5 +29,15 @@ def get_db_connection():
         user="uue9rqthiufqqio1",
         password="x82mk1uF5pwGK3vCsd5z",
         database="b4doekmqoqseuuhpvht5"
+    )
+"""
+
+"""
+def get_db_connection():
+    return mysql.connector.connect(
+        host="bgocf4tbcqh0beqp6kxh-mysql.services.clever-cloud.com",
+        user="ufctkasbdqpddbkd",
+        password="IkJrUL3YkcOrZpqjq347",
+        database="bgocf4tbcqh0beqp6kxh"
     )
 """

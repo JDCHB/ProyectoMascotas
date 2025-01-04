@@ -41,7 +41,7 @@ async def create_usuario_masivo(file: UploadFile = File(...)):
 # FIN CARGUE MASIVO
 
 
-@router.get("/get_user/{user_id}", response_model=User)
+@router.post("/get_user/{user_id}", response_model=User)
 async def get_user(user_id: int):
     rpta = nuevo_usuario.get_user(user_id)
     return rpta
