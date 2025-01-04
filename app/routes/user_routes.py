@@ -64,6 +64,17 @@ async def update_user(user_id: int, user: User):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.put("/update_estado_user/{user_id}")
+async def update_estado_user(user_id: int, user: User):
+    try:
+        rpta = nuevo_usuario.update_estado_user(user_id, user)
+        return rpta
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.delete("/delete_user/{user_id}")
 async def delete_user(user_id: int):
     try:

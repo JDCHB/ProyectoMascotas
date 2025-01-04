@@ -262,6 +262,30 @@ class Usercontroller():
             if conn:
                 conn.close()
 
+    # ACTUALIZAR ESTADO USUARIO
+    def update_estado_user(self, user_id: int, user: User):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE usuarios SET estado = %s WHERE id = %s",
+                (user.estado, user_id,)
+            )
+            conn.commit()
+
+            if cursor.rowcount == 0:
+                raise HTTPException(
+                    status_code=404, detail="Usuario no encontrado")
+
+            return {"mensaje": "Estado de Usuario actualizado exitosamente"}
+
+        except mysql.connector.Error as err:
+            raise HTTPException(status_code=500, detail=str(err))
+
+        finally:
+            if conn:
+                conn.close()
+
     # ELIMINAR USARIO
     def delete_user(self, user_id: int):
         try:
