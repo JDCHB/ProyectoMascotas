@@ -65,9 +65,9 @@ async def update_user(user_id: int, user: User):
 
 
 @router.put("/update_estado_user/{user_id}")
-async def update_estado_user(user_id: int, estado: int):
+async def update_estado_user(user_id: int, user: User):
     try:
-        rpta = nuevo_usuario.update_estado_user(user_id, estado)
+        rpta = nuevo_usuario.update_estado_user(user_id, user)
         return rpta
     except HTTPException as e:
         raise e
