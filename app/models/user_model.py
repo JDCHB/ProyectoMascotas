@@ -10,7 +10,7 @@ class User(BaseModel):
     documento: str
     telefono: str
     id_rol: int
-    estado: bool
+    estado: int  # AQUI ESTABA COMO BOOL
 
 
 class Login(BaseModel):
