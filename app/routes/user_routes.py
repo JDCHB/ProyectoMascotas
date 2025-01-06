@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
-from app.models.user_model import User, Login, Token
+from app.models.user_model import User, Login, Token, UserEstado
 from app.controllers.user_controller import *
 
 router = APIRouter()
@@ -65,7 +65,7 @@ async def update_user(user_id: int, user: User):
 
 
 @router.put("/update_estado_user/{user_id}")
-async def update_estado_user(user_id: int, user: User):
+async def update_estado_user(user_id: int, user: UserEstado):
     try:
         rpta = nuevo_usuario.update_estado_user(user_id, user)
         return rpta

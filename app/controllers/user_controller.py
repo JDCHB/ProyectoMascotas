@@ -2,7 +2,7 @@ import mysql.connector
 from fastapi import HTTPException, UploadFile
 import pandas as pd
 from app.config.db_config import get_db_connection
-from app.models.user_model import User, Login, Token
+from app.models.user_model import User, Login, Token, UserEstado
 from fastapi.encoders import jsonable_encoder
 from datetime import datetime, timedelta
 import jwt
@@ -263,7 +263,7 @@ class Usercontroller():
                 conn.close()
 
     # ACTUALIZAR ESTADO USUARIO
-    def update_estado_user(self, user_id: int, user: User):
+    def update_estado_user(self, user_id: int, user: UserEstado):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()

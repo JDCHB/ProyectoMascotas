@@ -20,3 +20,7 @@ class Login(BaseModel):
 
 class Token(BaseModel):
     token: str
+
+
+class UserEstado(BaseModel):
+    estado: bool
