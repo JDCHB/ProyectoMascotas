@@ -243,9 +243,9 @@ class Usercontroller():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "UPDATE usuarios SET email = %s, password = %s, nombre = %s, apellido = %s, documento = %s, telefono = %s, id_rol = %s, estado = %s WHERE id = %s",
-                (user.email, user.password, user.nombre, user.apellido,
-                 user.documento, user.telefono, user.id_rol, user.estado, user_id,)
+                "UPDATE usuarios SET email = %s, nombre = %s, apellido = %s, documento = %s, telefono = %s, estado = %s WHERE id = %s",
+                (user.email, user.nombre, user.apellido,
+                 user.documento, user.telefono, user.estado, user_id,)
             )
             conn.commit()
 
