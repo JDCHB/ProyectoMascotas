@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.admin_model import NuevoCollar, NuevoRol
+from app.models.admin_model import NuevoCollar, NuevoRol, NuevoModulo
 from fastapi.encoders import jsonable_encoder
 
 
@@ -49,6 +49,22 @@ class AdminController():
             conn.commit()
             conn.close()
             return {"resultado": "Rol creado"}
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+
+    # CREAR MODULO
+
+    def create_modulo(self, nuevomodulo: NuevoModulo):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "INSERT INTO modulos (nombre,estado) VALUES (%s, %s)", (nuevomodulo.nombre, nuevomodulo.estado))
+            conn.commit()
+            conn.close()
+            return {"resultado": "Modulo creado"}
         except mysql.connector.Error as err:
             conn.rollback()
         finally:

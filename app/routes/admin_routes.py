@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
-from app.models.admin_model import NuevoCollar
+from app.models.admin_model import NuevoCollar, NuevoRol, NuevoModulo
 from app.controllers.admin_controller import *
 
 router = APIRouter()
@@ -16,4 +16,10 @@ async def create_collar(nuevocollar: NuevoCollar):
 @router.post("/create_rol")
 async def create_rol(nuevorol: NuevoRol):
     rpta = nuevo_admin.create_rol(nuevorol)
+    return rpta
+
+
+@router.post("/create_modulo")
+async def create_modulo(nuevomodulo: NuevoModulo):
+    rpta = nuevo_admin.create_modulo(nuevomodulo)
     return rpta

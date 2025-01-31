@@ -13,3 +13,9 @@ class NuevoRol(BaseModel):
     id: int
     nombre: str
     estado: bool
+
+
+class NuevoModulo(BaseModel):
+    id: int
+    nombre: str
+    estado: bool
