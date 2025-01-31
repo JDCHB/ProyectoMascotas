@@ -9,11 +9,6 @@ class NuevoCollar(BaseModel):
     nivel_bateria: int
 
 
-class NuevoRol(BaseModel):
-    nombre: str
-    estado: bool
-
-
 class NuevoModulo(BaseModel):
     nombre_modulo: str
     estado: bool

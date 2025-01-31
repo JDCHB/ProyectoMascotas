@@ -13,12 +13,6 @@ async def create_collar(nuevocollar: NuevoCollar):
     return rpta
 
 
-@router.post("/create_rol")
-async def create_rol(nuevorol: NuevoRol):
-    rpta = nuevo_admin.create_rol(nuevorol)
-    return rpta
-
-
 @router.post("/create_modulo")
 async def create_modulo(nuevomodulo: NuevoModulo):
     rpta = nuevo_admin.create_modulo(nuevomodulo)
