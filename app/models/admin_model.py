@@ -15,5 +15,5 @@ class NuevoRol(BaseModel):
 
 
 class NuevoModulo(BaseModel):
-    nombre: str
+    nombre_modulo: str
     estado: bool
