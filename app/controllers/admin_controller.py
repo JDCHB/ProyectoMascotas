@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.registro_collargps_model import NuevoCollar
+from app.models.admin_model import NuevoCollar, NuevoRol
 from fastapi.encoders import jsonable_encoder
 
 
@@ -35,5 +35,21 @@ class AdminController():
             conn.rollback()
             return {"error": f"Error en la base de datos: {err}"}
 
+        finally:
+            conn.close()
+
+    # CREAR ROL
+
+    def create_rol(self, nuevorol: NuevoRol):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO roles (nombre,estado) VALUES (%s, %s)",
+                           (nuevorol.nombre, nuevorol.estado))
+            conn.commit()
+            conn.close()
+            return {"resultado": "Rol creado"}
+        except mysql.connector.Error as err:
+            conn.rollback()
         finally:
             conn.close()
