@@ -44,7 +44,7 @@ class AdminController():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO modulos (nombre_modulo,estado) VALUES (%s, %s)",
+            cursor.execute("INSERT INTO modulo (nombre,estado) VALUES (%s, %s)",
                            (nuevomodulo.nombre_modulo, nuevomodulo.estado))
             conn.commit()
             conn.close()

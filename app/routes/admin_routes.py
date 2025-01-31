@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi import APIRouter, HTTPException
 from app.models.admin_model import NuevoCollar, NuevoModulo
 from app.controllers.admin_controller import *
 
