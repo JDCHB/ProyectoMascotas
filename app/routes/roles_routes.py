@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.models.roles_model import Roles
 from app.controllers.roles_controller import *
+
 router = APIRouter()
 
 nuevo_rol = Rolescontroller()
