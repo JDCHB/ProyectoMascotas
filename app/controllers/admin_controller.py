@@ -61,7 +61,7 @@ class AdminController():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "INSERT INTO modulos (nombre_modulo,estado) VALUES (%s, %s)", (nuevomodulo.nombre, nuevomodulo.estado))
+                "INSERT INTO modulos (nombre_modulo,estado) VALUES (%s, %s)", (nuevomodulo.nombre_modulo, nuevomodulo.estado))
             conn.commit()
             conn.close()
             return {"resultado": "Modulo creado"}
