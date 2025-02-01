@@ -13,3 +13,11 @@ class NuevoModulo(BaseModel):
     id: int = None
     nombre_modulo: str
     estado: bool
+    descripcion: str
+
+
+class ModuloxRol(BaseModel):
+    id: int = None
+    id_modulo: int
+    id_rol: int
+    estado: bool
