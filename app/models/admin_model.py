@@ -10,7 +10,6 @@ class NuevoCollar(BaseModel):
 
 
 class NuevoModulo(BaseModel):
-    id: int = None
     nombre_modulo: str
     descripcion: str
     estado: bool
