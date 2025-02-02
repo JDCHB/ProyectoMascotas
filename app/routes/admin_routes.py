@@ -31,6 +31,17 @@ async def get_modulos():
     return rpta
 
 
+@router.put("/update_modulo/{modulo_id}")
+async def update_modulo(modulo_id: int, nuevomodulo: NuevoModulo):
+    try:
+        rpta = nuevo_admin.update_modulo(modulo_id, nuevomodulo)
+        return rpta
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.post("/create_moduloXrol")
 async def create_moduloXrol(moduloxrol: ModuloxRol):
     rpta = nuevo_admin.create_moduloXrol(moduloxrol)

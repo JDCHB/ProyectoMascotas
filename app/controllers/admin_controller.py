@@ -117,6 +117,31 @@ class AdminController():
         finally:
             conn.close()
 
+    # ACTUALIZAR MODULOS
+    def update_modulo(self, modulo_id: int, nuevomodulo: NuevoModulo):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE usuarios SET nombre = %s, descripcion = %s, estado = %s WHERE id = %s",
+                (nuevomodulo.nombre, nuevomodulo.descripcion,
+                 nuevomodulo.estado, modulo_id,)
+            )
+            conn.commit()
+
+            if cursor.rowcount == 0:
+                raise HTTPException(
+                    status_code=404, detail="Modulo no encontrado")
+
+            return {"mensaje": "Modulo actualizado exitosamente"}
+
+        except mysql.connector.Error as err:
+            raise HTTPException(status_code=500, detail=str(err))
+
+        finally:
+            if conn:
+                conn.close()
+
     def create_moduloXrol(self, moduloxrol: ModuloxRol):
         try:
             conn = get_db_connection()
