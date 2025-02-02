@@ -123,7 +123,7 @@ class AdminController():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "UPDATE usuarios SET nombre = %s, descripcion = %s, estado = %s WHERE id = %s",
+                "UPDATE modulo SET nombre = %s, descripcion = %s, estado = %s WHERE id = %s",
                 (nuevomodulo.nombre, nuevomodulo.descripcion,
                  nuevomodulo.estado, modulo_id,)
             )
