@@ -54,9 +54,39 @@ class AdminController():
         finally:
             conn.close()
 
-    # VER MODULOS
+    # BUSCAR MODULO
 
-    # VER USUARIOS
+    def get_modulo(self, modulo_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM modulo WHERE id = %s", (modulo_id,))
+            result = cursor.fetchone()
+            payload = []
+            content = {}
+
+            content = {
+                'id': int(result[0]),
+                'nombre': result[1],
+                'descripcion': result[2],
+                'estado': bool(result[3])
+            }
+            payload.append(content)
+
+            json_data = jsonable_encoder(content)
+            if result:
+                return json_data
+            else:
+                raise HTTPException(status_code=404, detail="Modulo not found")
+
+        except mysql.connector.Error as err:
+            conn.rollback()
+            return {"error": f"Database error: {err}"}
+        finally:
+            if conn:
+                conn.close()
+
+    # VER MODULOS
 
     def get_modulos(self):
         try:
@@ -79,7 +109,8 @@ class AdminController():
             if result:
                 return {"resultado": json_data}
             else:
-                raise HTTPException(status_code=404, detail="Modulo not found")
+                raise HTTPException(
+                    status_code=404, detail="Modulos not found")
 
         except mysql.connector.Error as err:
             conn.rollback()

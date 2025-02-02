@@ -19,6 +19,12 @@ async def create_modulo(nuevomodulo: NuevoModulo):
     return rpta
 
 
+@router.get("/get_modulo/{modulo_id}", response_model=NuevoModulo)
+async def get_modulo(modulo_id: int):
+    rpta = nuevo_admin.get_modulo(modulo_id)
+    return rpta
+
+
 @router.get("/get_modulos/")
 async def get_modulos():
     rpta = nuevo_admin.get_modulos()
