@@ -16,6 +16,11 @@ class NuevoModulo(BaseModel):
     estado: bool
 
 
+class Actualizar_Estado_Modulo(BaseModel):
+    id: int = None
+    estado: bool
+
+
 class ModuloxRol(BaseModel):
     id: int = None
     id_modulo: int

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from app.models.admin_model import NuevoCollar, NuevoModulo, ModuloxRol
+from app.models.admin_model import NuevoCollar, NuevoModulo, Actualizar_Estado_Modulo, ModuloxRol
 from app.controllers.admin_controller import *
 
 router = APIRouter()
@@ -43,9 +43,10 @@ async def update_modulo(modulo_id: int, nuevomodulo: NuevoModulo):
 
 
 @router.put("/update_estado_modulo/{modulo_id}")
-async def update_estado_modulo(modulo_id: int, nuevomodulo: NuevoModulo):
+async def update_estado_modulo(modulo_id: int, actualizar_estado_modulo: Actualizar_Estado_Modulo):
     try:
-        rpta = nuevo_admin.update_estado_modulo(modulo_id, nuevomodulo)
+        rpta = nuevo_admin.update_estado_modulo(
+            modulo_id, actualizar_estado_modulo)
         return rpta
     except HTTPException as e:
         raise e

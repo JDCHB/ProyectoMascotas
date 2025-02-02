@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.admin_model import NuevoCollar, NuevoModulo, ModuloxRol
+from app.models.admin_model import NuevoCollar, NuevoModulo, Actualizar_Estado_Modulo, ModuloxRol
 from fastapi.encoders import jsonable_encoder
 
 
@@ -143,13 +143,13 @@ class AdminController():
                 conn.close()
 
     # ACTUALIZAR ESTADO DEL MODULO
-    def update_estado_modulo(self, modulo_id: int, nuevomodulo: NuevoModulo):
+    def update_estado_modulo(self, modulo_id: int, actualizar_estado_modulo: Actualizar_Estado_Modulo):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
                 "UPDATE modulo SET estado = %s WHERE id = %s",
-                (nuevomodulo.estado, modulo_id,)
+                (actualizar_estado_modulo.estado, modulo_id,)
             )
             conn.commit()
 
