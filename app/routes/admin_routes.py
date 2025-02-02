@@ -19,6 +19,12 @@ async def create_modulo(nuevomodulo: NuevoModulo):
     return rpta
 
 
+@router.get("/get_modulos/")
+async def get_modulos():
+    rpta = nuevo_admin.get_modulos()
+    return rpta
+
+
 @router.post("/create_moduloXrol")
 async def create_moduloXrol(moduloxrol: ModuloxRol):
     rpta = nuevo_admin.create_moduloXrol(moduloxrol)
