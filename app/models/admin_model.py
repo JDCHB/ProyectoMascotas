@@ -13,6 +13,7 @@ class NuevoModulo(BaseModel):
     id: int = None
     nombre: str
     descripcion: str
+    ubicacion: str
     estado: bool
 
 

@@ -44,8 +44,8 @@ class AdminController():
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO modulo (nombre, descripcion, estado) VALUES (%s, %s, %s)",
-                           (nuevomodulo.nombre, nuevomodulo.descripcion, nuevomodulo.estado))
+            cursor.execute("INSERT INTO modulo (nombre, descripcion, ubicacion, estado) VALUES (%s, %s, %s, %s)",
+                           (nuevomodulo.nombre, nuevomodulo.descripcion, nuevomodulo.ubicacion, nuevomodulo.estado))
             conn.commit()
             conn.close()
             return {"resultado": "Modulo creado"}
@@ -69,7 +69,8 @@ class AdminController():
                 'id': int(result[0]),
                 'nombre': result[1],
                 'descripcion': result[2],
-                'estado': bool(result[3])
+                'ubicacion': result[3],
+                'estado': bool(result[4])
             }
             payload.append(content)
 
@@ -101,7 +102,8 @@ class AdminController():
                     'id': int(data[0]),
                     'nombre': data[1],
                     'descripcion': data[2],
-                    'estado': bool(data[3])
+                    'ubicacion': data[3],
+                    'estado': bool(data[4])
                 }
                 payload.append(content)
                 content = {}
@@ -123,7 +125,7 @@ class AdminController():
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "UPDATE modulo SET nombre = %s, descripcion = %s, estado = %s WHERE id = %s",
+                "UPDATE modulo SET nombre = %s, descripcion = %s, ubicacion=%s, estado = %s WHERE id = %s",
                 (nuevomodulo.nombre, nuevomodulo.descripcion,
                  nuevomodulo.estado, modulo_id,)
             )
@@ -166,6 +168,8 @@ class AdminController():
             if conn:
                 conn.close()
 
+    # DESDE AQUI ES MODULOXROL
+
     def create_moduloXrol(self, moduloxrol: ModuloxRol):
         try:
             conn = get_db_connection()
@@ -179,3 +183,113 @@ class AdminController():
             conn.rollback()
         finally:
             conn.close()
+
+    def get_moduloXrol(self, modulo_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM modulo WHERE id = %s", (modulo_id,))
+            result = cursor.fetchone()
+            payload = []
+            content = {}
+
+            content = {
+                'id': int(result[0]),
+                'nombre': result[1],
+                'descripcion': result[2],
+                'estado': bool(result[3])
+            }
+            payload.append(content)
+
+            json_data = jsonable_encoder(content)
+            if result:
+                return json_data
+            else:
+                raise HTTPException(status_code=404, detail="Modulo not found")
+
+        except mysql.connector.Error as err:
+            conn.rollback()
+            return {"error": f"Database error: {err}"}
+        finally:
+            if conn:
+                conn.close()
+
+    # VER MODULOS
+
+    def get_modulosXrol(self):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM modulo")
+            result = cursor.fetchall()
+            payload = []
+            content = {}
+            for data in result:
+                content = {
+                    'id': int(data[0]),
+                    'nombre': data[1],
+                    'descripcion': data[2],
+                    'estado': bool(data[3])
+                }
+                payload.append(content)
+                content = {}
+            json_data = jsonable_encoder(payload)
+            if result:
+                return {"resultado": json_data}
+            else:
+                raise HTTPException(
+                    status_code=404, detail="Modulos not found")
+
+        except mysql.connector.Error as err:
+            conn.rollback()
+        finally:
+            conn.close()
+
+    # ACTUALIZAR MODULOS
+    def update_moduloXrol(self, modulo_id: int, nuevomodulo: NuevoModulo):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE modulo SET nombre = %s, descripcion = %s, estado = %s WHERE id = %s",
+                (nuevomodulo.nombre, nuevomodulo.descripcion,
+                 nuevomodulo.estado, modulo_id,)
+            )
+            conn.commit()
+
+            if cursor.rowcount == 0:
+                raise HTTPException(
+                    status_code=404, detail="Modulo no encontrado")
+
+            return {"mensaje": "Modulo actualizado exitosamente"}
+
+        except mysql.connector.Error as err:
+            raise HTTPException(status_code=500, detail=str(err))
+
+        finally:
+            if conn:
+                conn.close()
+
+    # ACTUALIZAR ESTADO DEL MODULO
+    def update_estado_moduloXrol(self, modulo_id: int, actualizar_estado_modulo: Actualizar_Estado_Modulo):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE modulo SET estado = %s WHERE id = %s",
+                (actualizar_estado_modulo.estado, modulo_id,)
+            )
+            conn.commit()
+
+            if cursor.rowcount == 0:
+                raise HTTPException(
+                    status_code=404, detail="Modulo no encontrado")
+
+            return {"mensaje": "Estado de Modulo actualizado exitosamente"}
+
+        except mysql.connector.Error as err:
+            raise HTTPException(status_code=500, detail=str(err))
+
+        finally:
+            if conn:
+                conn.close()
