@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from app.models.roles_model import Roles
+from app.models.roles_model import Roles, Actualizar_Estado_Rol
 from app.controllers.roles_controller import *
 
 router = APIRouter()
@@ -45,6 +45,18 @@ async def get_roles():
 async def delete_rol(rol_id: int):
     try:
         rpta = nuevo_rol.delete_rol(rol_id)
+        return rpta
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.put("/update_estado_rol/{rol_id}")
+async def update_estado_rol(rol_id: int, actualizar_estado_rol: Actualizar_Estado_Rol):
+    try:
+        rpta = nuevo_rol.update_estado_rol(
+            rol_id, actualizar_estado_rol)
         return rpta
     except HTTPException as e:
         raise e

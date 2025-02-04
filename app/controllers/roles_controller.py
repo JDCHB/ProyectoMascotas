@@ -1,7 +1,7 @@
 import mysql.connector
 from fastapi import HTTPException
 from app.config.db_config import get_db_connection
-from app.models.roles_model import Roles
+from app.models.roles_model import Roles, Actualizar_Estado_Rol
 from fastapi.encoders import jsonable_encoder
 
 
@@ -119,6 +119,30 @@ class Rolescontroller():
             return {"mensaje": "Rol eliminado exitosamente"}
         except mysql.connector.Error as err:
             raise HTTPException(status_code=500, detail=str(err))
+        finally:
+            if conn:
+                conn.close()
+
+    # ACTUALIZAR ESTADO DEL MODULO
+    def update_estado_rol(self, rol_id: int, actualizar_estado_rol: Actualizar_Estado_Rol):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE roles SET estado = %s WHERE id = %s",
+                (actualizar_estado_rol.estado, rol_id,)
+            )
+            conn.commit()
+
+            if cursor.rowcount == 0:
+                raise HTTPException(
+                    status_code=404, detail="Rol no encontrado")
+
+            return {"mensaje": "Estado de Rol actualizado exitosamente"}
+
+        except mysql.connector.Error as err:
+            raise HTTPException(status_code=500, detail=str(err))
+
         finally:
             if conn:
                 conn.close()
